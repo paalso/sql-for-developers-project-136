@@ -1,9 +1,11 @@
 CREATE TABLE courses(
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
-    description VARCHAR(255),
+    description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
+
 );
 
 CREATE TABLE lessons(
@@ -14,13 +16,14 @@ CREATE TABLE lessons(
     course_position SMALLINT,
     course_id BIGINT REFERENCES courses (id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );
 
 CREATE TABLE modules(
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
-    description VARCHAR(255),
+    description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -32,4 +35,16 @@ CREATE TABLE programs(
     type VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE module_courses (
+    module_id BIGINT REFERENCES modules(id) ON DELETE CASCADE,
+    course_id BIGINT REFERENCES courses(id) ON DELETE CASCADE,
+    PRIMARY KEY (module_id, course_id)
+);
+
+CREATE TABLE program_modules (
+    program_id BIGINT REFERENCES programs(id) ON DELETE CASCADE,
+    module_id BIGINT REFERENCES modules(id) ON DELETE CASCADE,
+    PRIMARY KEY (program_id, module_id)
 );
