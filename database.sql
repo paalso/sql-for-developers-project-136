@@ -5,7 +5,6 @@ CREATE TABLE courses(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP
-
 );
 
 CREATE TABLE lessons(
@@ -14,7 +13,7 @@ CREATE TABLE lessons(
     content TEXT,
     video_link VARCHAR(255),
     course_position SMALLINT,
-    course_id BIGINT REFERENCES courses (id),
+    course_id BIGINT REFERENCES courses (id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP
@@ -47,4 +46,24 @@ CREATE TABLE program_modules (
     program_id BIGINT REFERENCES programs(id) ON DELETE CASCADE,
     module_id BIGINT REFERENCES modules(id) ON DELETE CASCADE,
     PRIMARY KEY (program_id, module_id)
+);
+
+CREATE TABLE teaching_groups(
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    slug VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users(
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    teaching_group_id BIGINT REFERENCES teaching_groups(id) ON DELETE
+    SET
+        NULL,
+        role VARCHAR(50) CHECK (role IN ('student', 'teacher', 'admin')) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
