@@ -79,7 +79,7 @@ CREATE TABLE payments(
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     enrollment_id BIGINT REFERENCES enrollments(id) ON DELETE SET NULL,
     amount NUMERIC(10, 2),
-    status VARCHAR(10) CHECK (status IN ('pending', 'paid', 'failed', 'refunded')) NOT NULL,
+    status VARCHAR(20) CHECK (status IN ('pending', 'paid', 'failed', 'refunded')) NOT NULL,
     payment_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -89,7 +89,7 @@ CREATE TABLE program_completions(
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
     program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
-    status VARCHAR(10) CHECK (status IN ('active', 'completed', 'pending', 'cancelled')) NOT NULL,
+    status VARCHAR(20) CHECK (status IN ('active', 'completed', 'pending', 'cancelled')) NOT NULL,
     start_date DATE,
     end_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -124,3 +124,20 @@ CREATE TABLE exercises(
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE discussions(
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    lesson_id BIGINT REFERENCES lessons (id) ON DELETE SET NULL,
+    content JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE blog_records(
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_id BIGINT REFERENCES users (id) ON DELETE SET NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    status VARCHAR(20) CHECK (status IN ('created', 'in moderation', 'published', 'archived')) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

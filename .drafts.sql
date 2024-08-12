@@ -47,6 +47,6 @@ EXECUTE FUNCTION update_updated_at_column();
 CREATE OR REPLACE FUNCTION drop_all()
 RETURNS VOID AS $$
 BEGIN
-    EXECUTE 'DROP TABLE IF EXISTS courses, lessons, modules, programs, module_courses, program_modules CASCADE';
+    EXECUTE 'DROP TABLE IF EXISTS courses, lessons, modules, programs, module_courses, program_modules, teaching_groups, users, enrollments, payments, program_completions, certificates, quizzes, exercises, discussions, blog_records CASCADE';
 END;
 $$ LANGUAGE plpgsql;
