@@ -69,7 +69,7 @@ CREATE TABLE users(
     teaching_group_id BIGINT REFERENCES teaching_groups(id) ON DELETE SET NULL,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255),
     role VARCHAR(10) CHECK (role IN ('Student', 'Teacher', 'Admin')) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
