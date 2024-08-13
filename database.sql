@@ -12,7 +12,7 @@ CREATE TABLE courses(
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_deleted BOOLEAN DEFAULT FALSE NOT NULL
+    deleted_at TIMESTAMP
 );
 
 CREATE TABLE lessons(
@@ -24,7 +24,7 @@ CREATE TABLE lessons(
     course_position SMALLINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_deleted BOOLEAN DEFAULT FALSE NOT NULL
+    deleted_at TIMESTAMP
 );
 
 CREATE TABLE modules(
@@ -33,7 +33,7 @@ CREATE TABLE modules(
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_deleted BOOLEAN DEFAULT FALSE NOT NULL
+    deleted_at TIMESTAMP
 );
 
 CREATE TABLE programs(
