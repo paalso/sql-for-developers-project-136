@@ -79,7 +79,7 @@ CREATE TABLE enrollments(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
-    status VARCHAR(10) CHECK (status IN ('active', 'pending', 'cancelled', 'completed')) NOT NULL,
+    status VARCHAR(20) CHECK (status IN ('active', 'pending', 'cancelled', 'completed')) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -119,7 +119,7 @@ CREATE TABLE quizzes(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     lesson_id BIGINT REFERENCES lessons (id) ON DELETE SET NULL,
     name VARCHAR(255),
-    content JSON,
+    content JSONB,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
