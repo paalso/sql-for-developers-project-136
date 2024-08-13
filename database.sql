@@ -21,7 +21,7 @@ CREATE TABLE lessons(
     title VARCHAR(255) NOT NULL,
     content TEXT,
     video_url VARCHAR(255),
-    course_position SMALLINT,
+    position SMALLINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP
@@ -39,13 +39,13 @@ CREATE TABLE modules(
 CREATE TABLE programs(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255) NOT NULL,
-    amount NUMERIC(10, 2),
-    type VARCHAR(255),
+    price NUMERIC(10, 2),
+    program_type VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE module_courses (
+CREATE TABLE course_modules (
     module_id BIGINT REFERENCES modules(id) ON DELETE CASCADE,
     course_id BIGINT REFERENCES courses(id) ON DELETE CASCADE,
     PRIMARY KEY (module_id, course_id)
@@ -90,7 +90,7 @@ CREATE TABLE payments(
     enrollment_id BIGINT REFERENCES enrollments(id) ON DELETE SET NULL,
     amount NUMERIC(10, 2),
     status VARCHAR(20) CHECK (status IN ('pending', 'paid', 'failed', 'refunded')) NOT NULL,
-    payment_date DATE,
+    paid_at DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -100,8 +100,8 @@ CREATE TABLE program_completions(
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
     program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     status VARCHAR(20) CHECK (status IN ('active', 'completed', 'pending', 'cancelled')) NOT NULL,
-    start_date DATE,
-    end_date DATE,
+    started_at DATE,
+    completed_at DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -110,8 +110,8 @@ CREATE TABLE certificates(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
     program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
-    certificate_url VARCHAR(255),
-    issue_date DATE,
+    url VARCHAR(255),
+    issued_at DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -119,7 +119,7 @@ CREATE TABLE certificates(
 CREATE TABLE quizzes(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     lesson_id BIGINT REFERENCES lessons (id) ON DELETE SET NULL,
-    name VARCHAR(255),
+    title VARCHAR(255),
     content JSONB,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -129,7 +129,7 @@ CREATE TABLE exercises(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     lesson_id BIGINT REFERENCES lessons (id) ON DELETE SET NULL,
     name VARCHAR(255),
-    exercise_url VARCHAR(255),
+    url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
