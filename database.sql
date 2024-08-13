@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS
 
 CREATE TABLE courses(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    title VARCHAR(255) NOT NULL,
+    title VARCHAR(255) UNIQUE NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -70,7 +70,7 @@ CREATE TABLE users(
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255),
-    role VARCHAR(10) CHECK (role IN ('student', 'teacher', 'admin')) NOT NULL,
+    role VARCHAR(10) CHECK (role IN ('Student', 'Teacher', 'Admin')) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -79,7 +79,7 @@ CREATE TABLE enrollments(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
-    status VARCHAR(20) CHECK (status IN ('active', 'pending', 'cancelled', 'completed')) NOT NULL,
+    status VARCHAR(10) CHECK (status IN ('active', 'pending', 'cancelled', 'completed')) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -146,7 +146,7 @@ CREATE TABLE blogs(
     user_id BIGINT REFERENCES users (id) ON DELETE SET NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT,
-    status VARCHAR(20) CHECK (status IN ('created', 'in moderation', 'published', 'archived')),
+    status VARCHAR(20) CHECK (status IN ('created', 'in moderation', 'published', 'archived')) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
