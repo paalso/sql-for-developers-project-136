@@ -67,7 +67,7 @@ CREATE TABLE teaching_groups(
 CREATE TABLE users(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     teaching_group_id BIGINT REFERENCES teaching_groups(id) ON DELETE SET NULL,
-    username VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(10) CHECK (role IN ('student', 'teacher', 'admin')) NOT NULL,
