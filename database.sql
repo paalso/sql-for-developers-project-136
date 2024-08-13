@@ -79,8 +79,8 @@ CREATE TABLE users(
 
 CREATE TABLE enrollments(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
+    program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     status VARCHAR(20) CHECK (status IN ('active', 'pending', 'cancelled', 'completed')) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -98,8 +98,8 @@ CREATE TABLE payments(
 
 CREATE TABLE program_completions(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
+    program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     status VARCHAR(20) CHECK (status IN ('active', 'completed', 'pending', 'cancelled')) NOT NULL,
     started_at DATE,
     completed_at DATE,
