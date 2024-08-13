@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS
     teaching_groups, users,
     enrollments,
     payments, program_completions, certificates,
-    quizzes, exercises, discussions, blog_records;
+    quizzes, exercises, discussions, blogs;
 
 
 CREATE TABLE courses(
@@ -141,7 +141,7 @@ CREATE TABLE discussions(
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE blog_records(
+CREATE TABLE blogs(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id BIGINT REFERENCES users (id) ON DELETE SET NULL,
     title VARCHAR(255) NOT NULL,
