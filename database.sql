@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS
 
 CREATE TABLE courses(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(255) UNIQUE NOT NULL,
+    title VARCHAR(255) UNIQUE NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -17,11 +17,11 @@ CREATE TABLE courses(
 
 CREATE TABLE lessons(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(255) UNIQUE NOT NULL,
-    content TEXT,
-    video_link VARCHAR(255),
-    course_position SMALLINT,
     course_id BIGINT REFERENCES courses (id) ON DELETE SET NULL,
+    title VARCHAR(255) UNIQUE NOT NULL,
+    content TEXT,
+    video_url VARCHAR(255),
+    course_position SMALLINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP
@@ -65,11 +65,11 @@ CREATE TABLE teaching_groups(
 
 CREATE TABLE users(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    teaching_group_id BIGINT REFERENCES teaching_groups(id) ON DELETE SET NULL,
     username VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(10) CHECK (role IN ('student', 'teacher', 'admin')) NOT NULL,
-    teaching_group_id BIGINT REFERENCES teaching_groups(id) ON DELETE SET NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
