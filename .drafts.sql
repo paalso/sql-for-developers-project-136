@@ -6,6 +6,11 @@ VALUES
     ('Machine Learning', 'Introduction to machine learning concepts and applications.');
 
 
+INSERT INTO courses (description)
+VALUES
+    ('A course without name');
+
+
 SELECT id,
         name, 
        CONCAT(SUBSTRING(description, 1, 25),'...') AS description,
@@ -50,3 +55,9 @@ BEGIN
     EXECUTE 'DROP TABLE IF EXISTS courses, lessons, modules, programs, module_courses, program_modules, teaching_groups, users, enrollments, payments, program_completions, certificates, quizzes, exercises, discussions, blog_records CASCADE';
 END;
 $$ LANGUAGE plpgsql;
+
+SELECT drop_all();
+
+
+
+https://github.com/stgoge/sql-for-developers-project-136/blob/main/database.sql

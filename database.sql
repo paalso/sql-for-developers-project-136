@@ -1,22 +1,13 @@
-DROP TABLE IF EXISTS courses;
-DROP TABLE IF EXISTS lessons;
-DROP TABLE IF EXISTS modules;
-DROP TABLE IF EXISTS programs;
-DROP TABLE IF EXISTS module_courses;
-DROP TABLE IF EXISTS program_modules;
-DROP TABLE IF EXISTS teaching_groups;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS enrollments;
-DROP TABLE IF EXISTS payments;
-DROP TABLE IF EXISTS program_completions;
-DROP TABLE IF EXISTS certificates;
-DROP TABLE IF EXISTS quizzes;
-DROP TABLE IF EXISTS exercises;
-DROP TABLE IF EXISTS discussions;
-DROP TABLE IF EXISTS blog_records;
+DROP TABLE IF EXISTS
+    courses, lessons, modules, programs, module_courses, program_modules,
+    teaching_groups, users,
+    enrollments,
+    payments, program_completions, certificates,
+    quizzes, exercises, discussions, blog_records;
+
 
 CREATE TABLE courses(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -25,7 +16,7 @@ CREATE TABLE courses(
 );
 
 CREATE TABLE lessons(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255) UNIQUE NOT NULL,
     content TEXT,
     video_link VARCHAR(255),
@@ -37,7 +28,7 @@ CREATE TABLE lessons(
 );
 
 CREATE TABLE modules(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -45,7 +36,7 @@ CREATE TABLE modules(
 );
 
 CREATE TABLE programs(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255) UNIQUE NOT NULL,
     cost NUMERIC,
     type VARCHAR(255),
@@ -66,14 +57,14 @@ CREATE TABLE program_modules (
 );
 
 CREATE TABLE teaching_groups(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     slug VARCHAR(255) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE users(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -84,7 +75,7 @@ CREATE TABLE users(
 );
 
 CREATE TABLE enrollments(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
     status VARCHAR(10) CHECK (status IN ('active', 'pending', 'cancelled', 'completed')) NOT NULL,
@@ -93,7 +84,7 @@ CREATE TABLE enrollments(
 );
 
 CREATE TABLE payments(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     enrollment_id BIGINT REFERENCES enrollments(id) ON DELETE SET NULL,
     amount NUMERIC(10, 2),
     status VARCHAR(20) CHECK (status IN ('pending', 'paid', 'failed', 'refunded')) NOT NULL,
@@ -103,7 +94,7 @@ CREATE TABLE payments(
 );
 
 CREATE TABLE program_completions(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
     program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     status VARCHAR(20) CHECK (status IN ('active', 'completed', 'pending', 'cancelled')) NOT NULL,
@@ -114,7 +105,7 @@ CREATE TABLE program_completions(
 );
 
 CREATE TABLE certificates(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
     program_id BIGINT REFERENCES programs(id) ON DELETE SET NULL,
     certificate_url VARCHAR(255),
@@ -124,7 +115,7 @@ CREATE TABLE certificates(
 );
 
 CREATE TABLE quizzes(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     lesson_id BIGINT REFERENCES lessons (id) ON DELETE SET NULL,
     name VARCHAR(255),
     content JSON,
@@ -133,7 +124,7 @@ CREATE TABLE quizzes(
 );
 
 CREATE TABLE exercises(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     lesson_id BIGINT REFERENCES lessons (id) ON DELETE SET NULL,
     name VARCHAR(255),
     exercise_url VARCHAR(255),
@@ -142,7 +133,7 @@ CREATE TABLE exercises(
 );
 
 CREATE TABLE discussions(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     lesson_id BIGINT REFERENCES lessons (id) ON DELETE SET NULL,
     content JSON,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -150,7 +141,7 @@ CREATE TABLE discussions(
 );
 
 CREATE TABLE blog_records(
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id BIGINT REFERENCES users (id) ON DELETE SET NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT,
