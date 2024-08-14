@@ -39,14 +39,7 @@ WHERE id = 3;
   3 | Data Structures  | Learn about core data str... | 2024-08-11 15:03:49 | 2024-08-11 15:03:49
 (4 rows)
 
-Почему не изменилось updated_at для id = 3;
 
-
-
-CREATE TRIGGER update_table1_updated_at
-BEFORE UPDATE ON table1
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at_column();
 
 
 CREATE OR REPLACE FUNCTION drop_all()
@@ -58,6 +51,3 @@ $$ LANGUAGE plpgsql;
 
 SELECT drop_all();
 
-
-
-https://github.com/stgoge/sql-for-developers-project-136/blob/main/database.sql
