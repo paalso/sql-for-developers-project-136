@@ -1,10 +1,10 @@
-### Hexlet tests and linter status:
+### Tests and linter status:
 [![Actions Status](https://github.com/paalso/sql-for-developers-project-136/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/paalso/sql-for-developers-project-136/actions)
 
 
-### Hexlet learning module [SQL for developers](https://ru.hexlet.io/programs/sql-for-developers)
+### Learning module SQL for developers
 
-#### [Final project: Educational platform / Проект: Образовательная платформа ](https://ru.hexlet.io/programs/sql-for-developers/projects/136)
+#### Final project: Educational platform / Проект: Образовательная платформа
 
 
 Some notes for successful completion of the tests:
